@@ -40,7 +40,32 @@ class ModelTrainer():
                 "Randomforestregressor":RandomForestRegressor()
             }
 
-            model_report:dict=evaluate_model(X_train=x_train,y_train=y_train,X_test=x_test,y_test=y_test,model_=models)
+            params={
+                "Decision tree":{
+                    'criterion':['squared_error','absolute_error','poisson'],
+                    'splitter':['best','random'],
+
+                },
+                "Randomforestregressor":{
+                    'criterion':['squared_error','absolute_error','poisson'],
+                    'n_estimators':[8,16,32,64,128]
+                },
+
+                "LinearRegression":{
+                    'fit_intercept':[True,False]
+                
+                },
+                "KNN regressor":{
+                    'n_neighbors':[5,7,9,11]
+                },
+                "Adaboost regressor":{
+                    'learning_rate':[0.1,0.01,0.05],
+                    'n_estimators':[8,16,32]
+                }
+                }
+            
+
+            model_report:dict=evaluate_model(X_train=x_train,y_train=y_train,X_test=x_test,y_test=y_test,model_=models,param=params)
 
 
             best_model_score=max(sorted(model_report.values()))
